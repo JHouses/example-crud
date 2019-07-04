@@ -1,4 +1,4 @@
-import Uppy from 'uppy/lib/core';
+import Uppy from 'uppy';
 import Dashboard from 'uppy/lib/plugins/Dashboard';
 import GoogleDrive from 'uppy/lib/plugins/GoogleDrive';
 import Dropbox from 'uppy/lib/plugins/Dropbox';
@@ -10,7 +10,7 @@ import MetaData from 'uppy/lib/plugins/MetaData';
 const SERVER = null;
 
 export default function uppyInit(options, onSuccess) {
-  const uppy = Uppy({
+  const uppy = Uppy.core({
     debug: true,
     autoProceed: options.autoProceed,
     restrictions: options.restrictions || ''
