@@ -8,6 +8,7 @@ import Auth0 from './helpers/auth0';
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
+      basename={'/dashboard'}
     {...rest}
     render={props =>
       isLoggedIn ? (

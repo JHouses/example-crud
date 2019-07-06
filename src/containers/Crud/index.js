@@ -23,8 +23,9 @@ class Crud extends Component {
   constructor() {
     super();
     this.state = {
-      modalVisible: false,
-      dataRow: null,
+        modalVisible: false,
+        dataRow: null,
+        dataFire: null
     }
   }
   componentDidMount() {
@@ -48,13 +49,35 @@ class Crud extends Component {
 
   submit() {
     const { createPostSaga, updatePostSaga } = this.props;
+    const { data } = this.props.data;
     const { dataRow } = this.state;
-    if (dataRow.id && dataRow !== undefined) {
-      updatePostSaga(dataRow)
-      this.handleModalClose()
+      let index =0;
+
+      if(data){
+          if (typeof(data)==='object'){
+              let array = Object.keys(data).map(function(key) {
+                  return data;
+              });
+              index = array.length;
+          }else{
+              index = data.length;
+          }
+      }
+
+      const id = index;
+
+    if (dataRow.id === undefined) {
+        let dataRowNew = {
+                id: id,
+                email: dataRow.email,
+                first_name: dataRow.first_name,
+                last_name: dataRow.last_name,
+            };
+        createPostSaga(dataRowNew)
+        this.handleModalClose()
     } else {
-      createPostSaga(dataRow)
-      this.handleModalClose()
+        updatePostSaga(dataRow)
+        this.handleModalClose()
     }
   }
   render() {
@@ -138,9 +161,31 @@ class Crud extends Component {
         },
       },
     ];
-    if(data.data !== undefined){
-      const dataSource = Object.values(data.data);
-      const { dataRow } = this.state;
+    if(data !== undefined ){
+      let dataSource = [];
+        if (data){
+            let newData =[];
+            if (typeof(data)==='object'){
+                 Object.keys(data).map(function(key) {
+                     if (data[key]!==null)
+                         newData.push(data[key]);
+                });
+            }else{
+                for (let i=0;i<data.length;i++){
+                    if (data[i]===null){
+                        newData.push(data[i]);
+
+                    }
+                }
+
+            }
+            dataSource = newData;
+
+        } else {
+            dataSource = [];
+        }
+
+        const { dataRow } = this.state;
       if(modalVisible){
         return (
             <LayoutContentWrapper>
@@ -224,7 +269,7 @@ class Crud extends Component {
                     </ButtonHolders>
                   </TitleWrapper>
                   <TableWrapper
-                      rowKey={data.id}
+                      rowKey={dataSource.id}
                       pagination={false}
                       columns={columns}
                       dataSource={dataSource}

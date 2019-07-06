@@ -1,23 +1,20 @@
 {
   "hosting": {
-    "public": "build",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ],
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "headers": [{
-      "source" : "**",
-      "headers" : [{
-        "key" : "Cache-Control",
-        "value" : "max-age=172800"
-      }]
-    }]
+    ]
+  },
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  },
+  "database": {
+    "rules": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
   }
 }

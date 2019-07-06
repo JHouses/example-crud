@@ -19,12 +19,7 @@ const api = API.create();
     const response = yield call(api.createPost, data)
     if (response.ok) {
         yield put(actions.saveIntoApiRequest(response.data))
-        alert('SAGA: Datos creados, respuesta del api: ' +
-            '\nEstado: '+ JSON.stringify(response.status) +
-            '\nUrl: '+ JSON.stringify(response.config.url) +
-            '\nMetodo: '+ JSON.stringify(response.config.method) +
-            '\nDatos creados: '+ JSON.stringify(response.data) +
-            '\n\n**NOTA**: el recurso no se actualizará realmente en el servidor, pero se simulará como si.')
+        window.location.reload();
     } else {
         yield put(actions.saveIntoApiError())
     }
@@ -35,12 +30,7 @@ const api = API.create();
     const response = yield call(api.updatePosts, id.id, id)
     if (response.ok) {
         yield put(actions.updateFromApiRequest(response.data))
-        alert('SAGA: Datos actulizados, respuesta del api: ' +
-            '\nEstado: '+ JSON.stringify(response.status) +
-            '\nUrl: '+ JSON.stringify(response.config.url) +
-            '\nMetodo: '+ JSON.stringify(response.config.method) +
-            '\nDatos actualizados: '+ JSON.stringify(response.data) +
-            '\n\n**NOTA**: el recurso no se actualizará realmente en el servidor, pero se simulará como si.')
+        window.location.reload();
     } else {
         yield put(actions.updateFromApiError())
     }
@@ -51,12 +41,7 @@ const api = API.create();
     const response = yield call(api.deletePosts, id)
      if (response.ok) {
         yield put(actions.deleteFromApiRequest(response.data))
-         alert('SAGA: Datos eliminados, respuesta del api: ' +
-             '\nEstado: '+ JSON.stringify(response.status) +
-             '\nUrl: '+ JSON.stringify(response.config.url) +
-             '\nMetodo: '+ JSON.stringify(response.config.method) +
-             '\nDatos eliminados: '+ JSON.stringify(id) +
-             '\n\n**NOTA**: el recurso no se actualizará realmente en el servidor, pero se simulará como si.')
+         window.location.reload();
     } else {
         yield put(actions.deleteFromApiError())
     }
